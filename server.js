@@ -1,14 +1,17 @@
 console.log("Starting server script...");
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 
+const PORT = process.env.PORT || 3001;
+
 app.use(cors());
 app.use(express.json());
 
 mongoose
-    .connect("mongodb+srv://20225305:20225305@cluster0.hnc8ye0.mongodb.net/?appName=Cluster0")
+    .connect(process.env.MONGO_URI)
     .then(() => console.log("Connected to MongoDB"))
     .catch((err) => console.error("MongoDB Error:", err));
 
@@ -128,6 +131,6 @@ app.delete("/api/users/:id", async (req, res) => {
     }
 });
 
-app.listen(3001, () => {
+app.listen(PORT, () => {
     console.log("Server running on http://localhost:3001");
 });
